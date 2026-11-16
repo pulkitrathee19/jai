@@ -1,0 +1,1535 @@
+/* ==========================================================================
+   Apple-Inspired Homepage Stylesheet
+   Designed with Apple's SF Typography, Precision Spacing, and Glassmorphism
+   ========================================================================== */
+
+/* --- CSS Variables & Design Tokens --- */
+:root {
+  /* Colors */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f5f5f7;
+  --color-bg-tertiary: #fbfbfd;
+  --color-bg-dark: #000000;
+  --color-bg-dark-secondary: #161617;
+  --color-bg-dark-card: #1d1d1f;
+  
+  --color-text-primary: #1d1d1f;
+  --color-text-secondary: #86868b;
+  --color-text-dark-primary: #f5f5f7;
+  --color-text-dark-secondary: #a1a1a6;
+  
+  --color-link: #0066cc;
+  --color-link-hover: #0077ed;
+  --color-apple-blue: #0071e3;
+  --color-apple-blue-hover: #0077ed;
+  --color-apple-blue-active: #0062c4;
+  
+  --color-nav-bg: rgba(255, 255, 255, 0.85);
+  --color-nav-border: rgba(0, 0, 0, 0.08);
+  --color-nav-text: rgba(0, 0, 0, 0.8);
+  --color-nav-hover: #000000;
+  
+  /* Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  
+  /* Spacing */
+  --nav-height: 48px;
+  --ribbon-height: 40px;
+  --section-gap: 12px;
+  
+  /* Radii */
+  --radius-pill: 980px;
+  --radius-card: 28px;
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  
+  /* Shadows & Transitions */
+  --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+  --shadow-dark-card: 0 10px 40px rgba(0, 0, 0, 0.4);
+  
+  --transition-fast: 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+  --transition-normal: 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+  --transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --- Global Reset & Box Sizing --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  font-family: var(--font-family);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  line-height: 1.47059;
+  letter-spacing: -0.01em;
+}
+
+img, svg, picture {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* --- Container Utility --- */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.container-wide {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ==========================================================================
+   Announcement Ribbon
+   ========================================================================== */
+.ribbon-banner {
+  background-color: var(--color-bg-secondary);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 12px 20px;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  position: relative;
+  z-index: 99;
+}
+
+.ribbon-banner a {
+  color: var(--color-link);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 400;
+}
+
+.ribbon-banner a:hover {
+  text-decoration: underline;
+}
+
+.ribbon-banner .chevron-icon {
+  width: 9px;
+  height: 9px;
+  fill: currentColor;
+}
+
+/* ==========================================================================
+   Clean White Glassmorphic Navigation Bar
+   ========================================================================== */
+.global-nav {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--nav-height);
+  background: var(--color-nav-bg);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--color-nav-border);
+  z-index: 1000;
+  transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+
+.global-nav.scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom-color: rgba(0, 0, 0, 0.12);
+}
+
+.nav-container {
+  max-width: 1024px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  color: var(--color-nav-text);
+  transition: opacity var(--transition-fast);
+}
+
+.nav-logo svg {
+  width: 16px;
+  height: 44px;
+  fill: currentColor;
+}
+
+.nav-logo:hover {
+  opacity: 0.7;
+}
+
+/* Desktop Menu List */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 32px;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  font-size: 0.78rem;
+  letter-spacing: -0.01em;
+  color: var(--color-nav-text);
+  font-weight: 400;
+  opacity: 0.85;
+  transition: opacity var(--transition-fast), color var(--transition-fast);
+  white-space: nowrap;
+  padding: 8px 0;
+}
+
+.nav-link:hover {
+  opacity: 1;
+  color: var(--color-nav-hover);
+}
+
+/* Nav Actions (Search & Bag) */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-action-btn {
+  color: var(--color-nav-text);
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.nav-action-btn:hover {
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+.nav-action-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* Shopping Bag Badge */
+.bag-badge {
+  position: absolute;
+  top: -4px;
+  right: -8px;
+  background-color: var(--color-apple-blue);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 600;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: transform var(--transition-fast);
+}
+
+.bag-badge.pop {
+  transform: scale(1.3);
+}
+
+/* Mobile Nav Toggle */
+.mobile-nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.mobile-nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background-color: var(--color-text-primary);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.mobile-nav-toggle.active span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+.mobile-nav-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-nav-toggle.active span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* Mobile Menu Drawer */
+.mobile-menu-drawer {
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  width: 100%;
+  height: calc(100vh - var(--nav-height));
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(25px);
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  z-index: 999;
+  overflow-y: auto;
+}
+
+.mobile-menu-drawer.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-menu-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mobile-menu-links a {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+/* ==========================================================================
+   Buttons & CTAs (Apple Signature Pill Buttons)
+   ========================================================================== */
+.btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.92rem;
+  font-weight: 400;
+  padding: 10px 22px;
+  border-radius: var(--radius-pill);
+  transition: all var(--transition-normal);
+  line-height: 1.17648;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--color-apple-blue);
+  color: var(--color-white);
+  border: 1px solid var(--color-apple-blue);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-apple-blue-hover);
+  border-color: var(--color-apple-blue-hover);
+  transform: scale(1.02);
+}
+
+.btn-primary:active {
+  background-color: var(--color-apple-blue-active);
+  transform: scale(0.98);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-apple-blue);
+  border: 1px solid var(--color-apple-blue);
+}
+
+.btn-outline:hover {
+  background-color: rgba(0, 113, 227, 0.06);
+  transform: scale(1.02);
+}
+
+.btn-outline:active {
+  background-color: rgba(0, 113, 227, 0.12);
+  transform: scale(0.98);
+}
+
+/* Dark Section Variant Buttons */
+.dark-section .btn-outline {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: var(--color-white);
+}
+
+.dark-section .btn-outline:hover {
+  border-color: var(--color-white);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.link-chevron {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--color-link);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.link-chevron:hover {
+  text-decoration: underline;
+}
+
+.link-chevron svg {
+  width: 9px;
+  height: 9px;
+  fill: currentColor;
+  transition: transform var(--transition-fast);
+}
+
+.link-chevron:hover svg {
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   Hero Section 1: iPhone 16 Pro (Immersive Dark Titanium)
+   ========================================================================== */
+.hero-iphone-pro {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  padding: 65px 20px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: var(--section-gap);
+}
+
+.hero-glow {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 650px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(162, 137, 107, 0.22) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+  filter: blur(60px);
+  transition: background var(--transition-smooth);
+}
+
+.hero-header {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #d1b89d; /* Natural desert gold/titanium */
+  letter-spacing: -0.015em;
+  margin-bottom: 6px;
+}
+
+.hero-title {
+  font-size: clamp(2.8rem, 6.5vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 10px;
+}
+
+.hero-subhead {
+  font-size: clamp(1.4rem, 3vw, 1.85rem);
+  font-weight: 400;
+  color: var(--color-text-dark-secondary);
+  letter-spacing: -0.015em;
+  margin-bottom: 8px;
+}
+
+.hero-pricing {
+  font-size: 0.95rem;
+  color: var(--color-text-dark-secondary);
+  margin-top: 10px;
+}
+
+/* Color Switcher Component */
+.color-switcher {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 24px auto 0;
+  z-index: 3;
+  position: relative;
+}
+
+.color-label {
+  font-size: 0.85rem;
+  color: var(--color-text-dark-secondary);
+  letter-spacing: -0.01em;
+  transition: color var(--transition-fast);
+}
+
+.color-dots {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.color-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  border: 2px solid transparent;
+}
+
+.color-dot::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  transition: border-color var(--transition-fast);
+}
+
+.color-dot.active {
+  transform: scale(1.15);
+}
+
+.color-dot.active::after {
+  border-color: #0071e3;
+}
+
+/* Titanium Swatches */
+.dot-desert { background-color: #c9b09a; }
+.dot-natural { background-color: #9d968d; }
+.dot-white { background-color: #e3e4e5; }
+.dot-black { background-color: #3b3a39; }
+
+/* Visual Product Showcase */
+.hero-image-wrap {
+  position: relative;
+  z-index: 2;
+  margin: 30px auto 0;
+  max-width: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-main-img {
+  width: 100%;
+  max-height: 480px;
+  object-fit: contain;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.7));
+}
+
+.hero-main-img:hover {
+  transform: scale(1.02);
+}
+
+/* Apple Feature Badge Ribbon */
+.feature-badges {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 36px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
+}
+
+.feature-badge-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  color: var(--color-text-dark-primary);
+  backdrop-filter: blur(10px);
+}
+
+.feature-badge-item svg {
+  width: 15px;
+  height: 15px;
+  fill: #d1b89d;
+}
+
+/* ==========================================================================
+   Hero Section 2: iPhone 16 (Pristine Light Theme)
+   ========================================================================== */
+.hero-iphone-16 {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  padding: 60px 20px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: var(--section-gap);
+}
+
+.hero-iphone-16 .hero-title {
+  color: var(--color-text-primary);
+}
+
+.hero-iphone-16 .hero-subhead {
+  color: var(--color-text-secondary);
+}
+
+.hero-iphone-16 .hero-pricing {
+  color: var(--color-text-secondary);
+}
+
+/* Light Section Color Swatches */
+.dot-ultramarine { background-color: #3f68a8; }
+.dot-teal { background-color: #79aeb2; }
+.dot-pink { background-color: #e597ab; }
+.dot-white-std { background-color: #f7f7f7; border: 1px solid #d2d2d7; }
+.dot-black-std { background-color: #2b2b2c; }
+
+/* ==========================================================================
+   Product Showcase Sections (MacBook, iPad, Watch)
+   ========================================================================== */
+.product-showcase-section {
+  padding: 60px 20px;
+  text-align: center;
+  position: relative;
+  margin-bottom: var(--section-gap);
+  border-radius: var(--radius-card);
+  margin-left: 12px;
+  margin-right: 12px;
+  overflow: hidden;
+}
+
+/* MacBook Pro (Space Black Dark Aesthetic) */
+.macbook-section {
+  background: radial-gradient(ellipse at top, #1c1c1e 0%, #000000 70%);
+  color: var(--color-white);
+  padding-bottom: 20px;
+}
+
+.macbook-section .section-eyebrow {
+  font-size: 1.15rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #f5f5f7 0%, #86868b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 6px;
+}
+
+.macbook-section .section-title {
+  font-size: clamp(2.5rem, 5.5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin-bottom: 10px;
+}
+
+.macbook-section .section-subhead {
+  font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+  color: var(--color-text-dark-secondary);
+  max-width: 680px;
+  margin: 0 auto 12px;
+}
+
+.macbook-img-container {
+  max-width: 960px;
+  margin: 35px auto 0;
+  position: relative;
+}
+
+.macbook-hero-img {
+  width: 100%;
+  max-height: 480px;
+  object-fit: contain;
+  transition: transform 0.5s ease;
+  filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.9));
+}
+
+.macbook-hero-img:hover {
+  transform: translateY(-6px);
+}
+
+/* Specs Bar */
+.specs-bar {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.spec-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.spec-desc {
+  font-size: 0.8rem;
+  color: var(--color-text-dark-secondary);
+}
+
+/* iPad Pro Showcase (Pristine Silver Minimalist) */
+.ipad-section {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+}
+
+.ipad-section .section-eyebrow {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-apple-blue);
+  margin-bottom: 6px;
+}
+
+.ipad-section .section-title {
+  font-size: clamp(2.5rem, 5.5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin-bottom: 10px;
+}
+
+.ipad-section .section-subhead {
+  font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+  color: var(--color-text-secondary);
+  max-width: 640px;
+  margin: 0 auto 10px;
+}
+
+.ipad-img-container {
+  max-width: 880px;
+  margin: 30px auto 0;
+}
+
+.ipad-hero-img {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  transition: transform 0.5s ease;
+  box-shadow: var(--shadow-card);
+}
+
+.ipad-hero-img:hover {
+  transform: scale(1.015);
+}
+
+/* Apple Watch Showcase */
+.watch-section {
+  background-color: #0b0c0e;
+  color: var(--color-white);
+}
+
+.watch-logo-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.watch-logo-img {
+  height: 38px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.watch-section .section-title {
+  font-size: clamp(2.5rem, 5.5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin-bottom: 10px;
+}
+
+.watch-section .section-subhead {
+  font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+  color: var(--color-text-dark-secondary);
+  max-width: 600px;
+  margin: 0 auto 12px;
+}
+
+.watch-img-container {
+  max-width: 920px;
+  margin: 30px auto 0;
+}
+
+.watch-hero-img {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  transition: transform 0.5s ease;
+  box-shadow: var(--shadow-dark-card);
+}
+
+.watch-hero-img:hover {
+  transform: scale(1.02);
+}
+
+/* ==========================================================================
+   Apple Bento Grid (Vision Pro, AirPods, Trade In, Apple Card)
+   ========================================================================== */
+.bento-section {
+  max-width: 1440px;
+  margin: 0 auto var(--section-gap);
+  padding: 0 12px;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--section-gap);
+}
+
+.bento-card {
+  position: relative;
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--radius-card);
+  padding: 48px 32px 32px;
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 540px;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.bento-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.bento-card.dark-card {
+  background-color: var(--color-bg-dark);
+  color: var(--color-white);
+}
+
+.bento-card-header {
+  position: relative;
+  z-index: 2;
+}
+
+.bento-eyebrow {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-secondary);
+  margin-bottom: 6px;
+}
+
+.dark-card .bento-eyebrow {
+  color: var(--color-text-dark-secondary);
+}
+
+.bento-title {
+  font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.bento-desc {
+  font-size: 1.05rem;
+  color: var(--color-text-secondary);
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.dark-card .bento-desc {
+  color: var(--color-text-dark-secondary);
+}
+
+.bento-img-wrap {
+  position: relative;
+  z-index: 1;
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.bento-img {
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  transition: transform 0.5s ease;
+}
+
+.bento-card:hover .bento-img {
+  transform: scale(1.03);
+}
+
+/* ==========================================================================
+   Apple TV+ Entertainment Showcase
+   ========================================================================== */
+.tv-showcase-section {
+  max-width: 1440px;
+  margin: 0 auto var(--section-gap);
+  padding: 40px 12px;
+}
+
+.tv-section-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.tv-brand-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.tv-brand-title svg {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+}
+
+.tv-carousel-wrap {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.tv-slide-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+}
+
+.tv-slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.tv-slide-card:hover .tv-slide-img {
+  transform: scale(1.04);
+}
+
+.tv-slide-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
+  color: var(--color-white);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.tv-badge {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.tv-show-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.btn-stream {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform var(--transition-fast);
+}
+
+.btn-stream:hover {
+  transform: scale(1.05);
+}
+
+.btn-stream svg {
+  width: 12px;
+  height: 12px;
+  fill: currentColor;
+}
+
+/* ==========================================================================
+   Interactive Modals & Drawers
+   ========================================================================== */
+
+/* Backdrop Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+  z-index: 2000;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Quick Buy Configurator Modal */
+.config-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -46%) scale(0.96);
+  width: 90%;
+  max-width: 620px;
+  max-height: 85vh;
+  background: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+  padding: 36px 32px 30px;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: all var(--transition-smooth);
+  z-index: 2001;
+}
+
+.config-modal.open {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+  background: var(--color-bg-secondary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.modal-close-btn:hover {
+  background: #e5e5ea;
+}
+
+.modal-close-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: #1d1d1f;
+}
+
+.config-product-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.config-product-img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+}
+
+.config-product-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.config-product-price {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin-top: 4px;
+}
+
+.config-option-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.config-storage-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.storage-btn {
+  border: 1.5px solid #d2d2d7;
+  border-radius: var(--radius-sm);
+  padding: 12px 6px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.storage-btn:hover {
+  border-color: #86868b;
+}
+
+.storage-btn.active {
+  border-color: var(--color-apple-blue);
+  background-color: rgba(0, 113, 227, 0.05);
+  color: var(--color-apple-blue);
+}
+
+/* Shopping Bag Slide-Over Drawer */
+.bag-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 420px;
+  height: 100vh;
+  background: var(--color-white);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.15);
+  transform: translateX(100%);
+  transition: transform var(--transition-smooth);
+  z-index: 2100;
+  display: flex;
+  flex-direction: column;
+}
+
+.bag-drawer.open {
+  transform: translateX(0);
+}
+
+.bag-drawer-header {
+  padding: 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bag-drawer-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.bag-items-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+}
+
+.empty-bag-msg {
+  text-align: center;
+  color: var(--color-text-secondary);
+  margin-top: 60px;
+  font-size: 1rem;
+}
+
+.bag-item-card {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.bag-item-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.bag-item-details {
+  flex: 1;
+}
+
+.bag-item-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.bag-item-spec {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.bag-item-price {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.bag-item-remove {
+  font-size: 0.8rem;
+  color: var(--color-link);
+  cursor: pointer;
+}
+
+.bag-item-remove:hover {
+  text-decoration: underline;
+}
+
+.bag-drawer-footer {
+  padding: 24px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  background: var(--color-bg-secondary);
+}
+
+.bag-subtotal-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.bag-shipping-note {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 18px;
+}
+
+.btn-checkout {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Toast Notification */
+.toast-notice {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(29, 29, 31, 0.92);
+  color: var(--color-white);
+  backdrop-filter: blur(12px);
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 3000;
+  opacity: 0;
+  transition: all var(--transition-smooth);
+}
+
+.toast-notice.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Comprehensive Apple Footer
+   ========================================================================== */
+.global-footer {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  line-height: 1.33337;
+  padding: 24px 0 40px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.footer-content {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 22px;
+}
+
+/* Disclaimers & Notes */
+.footer-disclaimers {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  padding-bottom: 18px;
+  margin-bottom: 20px;
+}
+
+.footer-disclaimers ol {
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-disclaimers li {
+  color: var(--color-text-secondary);
+}
+
+/* Breadcrumbs */
+.footer-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 0.8rem;
+  color: var(--color-text-primary);
+}
+
+.footer-breadcrumbs svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+.footer-breadcrumbs .crumb-sep {
+  color: var(--color-text-secondary);
+}
+
+/* 5-Column Directory Links */
+.footer-directory {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  padding-bottom: 24px;
+}
+
+.directory-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.directory-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+.directory-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.directory-link {
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.directory-link:hover {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+}
+
+/* Footer Bottom Bar */
+.footer-bottom {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-shop-note {
+  width: 100%;
+  margin-bottom: 8px;
+  color: var(--color-text-secondary);
+}
+
+.footer-shop-note a {
+  color: var(--color-link);
+}
+
+.footer-shop-note a:hover {
+  text-decoration: underline;
+}
+
+.footer-legal {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.footer-copyright {
+  color: var(--color-text-secondary);
+}
+
+.legal-links {
+  display: flex;
+  gap: 12px;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.legal-links a {
+  color: var(--color-text-secondary);
+}
+
+.legal-links a:hover {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+}
+
+.footer-locale {
+  color: var(--color-text-primary);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .nav-menu {
+    gap: 20px;
+  }
+  
+  .footer-directory {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 834px) {
+  .nav-menu {
+    display: none;
+  }
+  
+  .mobile-nav-toggle {
+    display: flex;
+  }
+  
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tv-carousel-wrap {
+    grid-template-columns: 1fr;
+  }
+  
+  .footer-directory {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .product-showcase-section {
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 540px) {
+  .footer-directory {
+    grid-template-columns: 1fr;
+  }
+  
+  .config-storage-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .hero-iphone-pro, .hero-iphone-16 {
+    padding: 40px 16px 30px;
+  }
+  
+  .specs-bar {
+    gap: 18px;
+  }
+  
+  .spec-value {
+    font-size: 1.25rem;
+  }
+}
